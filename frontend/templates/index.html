@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI-powered identity security, breach detection, and threat intelligence.">
+  <title>SecureX | Identity Security Platform</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <!-- Nebula Background -->
+  <div class="nebula-container">
+    <div class="nebula-blob nebula-blob-1"></div>
+    <div class="nebula-blob nebula-blob-2"></div>
+    <div class="nebula-blob nebula-blob-3"></div>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles-container" id="particles"></div>
+
+  <!-- Grid Pattern -->
+  <div class="grid-pattern"></div>
+
+  <!-- Scan Modal -->
+  <div class="scan-modal-overlay" id="scanModal">
+    <div class="scan-modal-backdrop"></div>
+    <div class="scan-modal glass-card">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-scan-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" x2="17" y1="12" y2="12"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Security Scan</h3>
+            <p class="modal-subtitle" id="modalScanMode"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-progress">
+        <div class="modal-progress-bar" id="modalProgressBar"></div>
+      </div>
+      <div class="modal-steps" id="modalSteps"></div>
+      <div id="hashDetails" style="display:none">
+        <div class="hash-details glass-card">
+          <div class="hash-details-header">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--indigo-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+            <span>K-Anonymity Hash Details</span>
+          </div>
+          <div class="hash-grid">
+            <div>
+              <p>SHA-1 Prefix (sent)</p>
+              <code class="prefix-code" id="hashPrefix"></code>
+            </div>
+            <div>
+              <p>SHA-1 Suffix (local only)</p>
+              <code class="suffix-code" id="hashSuffix"></code>
+            </div>
+          </div>
+          <p class="hash-note">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            Only the prefix is sent to HIBP. Your full password never leaves your device.
+          </p>
+        </div>
+      </div>
+      <div class="modal-status">
+        <div class="pulse-dot"></div>
+        <span id="modalActiveLabel">Initializing...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="landing-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <div class="nav-brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+        </div>
+        <span class="nav-brand-text">Secure<span>X</span></span>
+      </a>
+      <div class="nav-links-row">
+        <a href="/" class="nav-link-item active">Home</a>
+        <a href="/about" class="nav-link-item">About</a>
+        <div class="badge system-badge">
+          <div class="pulse-dot"></div>
+          System Online
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div style="text-align:center; max-width:42rem; margin:0 auto;">
+      <div class="badge hero-badge" style="margin:0 auto 2rem;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4H14.26c-.16-1.49-.26-2.98-.26-4a2 2 0 0 0-2-2Z"/><path d="M14 22H10"/><path d="M5.65 8a8 8 0 1 1 12.7 0"/><path d="M12 2v2"/></svg>
+        AI-Powered Identity Protection
+      </div>
+      <h1 class="hero-title">
+        Your digital identity, <span class="text-gradient">defended.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Scan your email, password, or both against real breach databases and leaked credentials in real-time.
+      </p>
+    </div>
+
+    <!-- Scan Form -->
+    <div class="scan-form-wrapper">
+      <div class="scan-form-outer">
+        <div class="scan-form-glow"></div>
+        <div class="scan-form-border">
+          <div class="scan-form-border-anim"></div>
+          <div class="scan-form-body">
+            <div class="scan-form-topline"></div>
+
+            <!-- Mode Indicator -->
+            <div class="scan-mode">
+              <div class="scan-mode-dot" id="scanModeDot"></div>
+              <span class="scan-mode-label">Scan Mode:</span>
+              <span class="scan-mode-value" id="scanModeValue">Enter data below</span>
+            </div>
+
+            <!-- Form Fields -->
+            <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.5rem;">
+              <!-- Email Input -->
+              <div class="cyber-input-group">
+                <label class="cyber-input-label" for="emailInput">Email Address</label>
+                <div class="cyber-input-wrapper">
+                  <div class="cyber-input-glow"></div>
+                  <div class="cyber-input-border"></div>
+                  <div class="cyber-input-container" id="emailContainer">
+                    <div class="cyber-input-scanline"></div>
+                    <div class="cyber-input-icon">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    </div>
+                    <input class="cyber-input" type="email" id="emailInput" placeholder="Enter your email address" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Password Input -->
+              <div class="cyber-input-group">
+                <label class="cyber-input-label" for="passwordInput">Password</label>
+                <div class="cyber-input-wrapper">
+                  <div class="cyber-input-glow"></div>
+                  <div class="cyber-input-border"></div>
+                  <div class="cyber-input-container" id="passwordContainer">
+                    <div class="cyber-input-scanline"></div>
+                    <div class="cyber-input-icon">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <input class="cyber-input" type="password" id="passwordInput" placeholder="Enter password to check" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Error -->
+            <p class="scan-error" id="scanError" style="display:none;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              <span id="scanErrorText"></span>
+            </p>
+
+            <!-- CTA Button -->
+            <div class="cta-wrapper" id="ctaWrapper">
+              <div class="cta-glow"></div>
+              <button class="btn-primary cta-button" id="scanBtn" disabled>
+                <span class="cta-content" id="ctaContent">
+                  Initiate Security Scan
+                  <span class="arrow-bounce">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </span>
+                </span>
+              </button>
+            </div>
+
+            <!-- Privacy Note -->
+            <p class="privacy-note">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+              Your password never leaves your device. We use k-anonymity hashing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Hint -->
+    <div class="scroll-hint">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="features-section">
+    <div class="features-header">
+      <div class="badge" style="margin-bottom:1rem;">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        How It Works
+      </div>
+      <h2>Real security, not theater.</h2>
+      <p>Every scan queries live databases and returns genuine breach data.</p>
+    </div>
+    <div class="features-grid">
+      <div class="glass-card feature-card">
+        <div class="feature-inner">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" x2="17" y1="12" y2="12"/></svg>
+          </div>
+          <div>
+            <h3 class="feature-title">Real Breach Detection</h3>
+            <p class="feature-desc">Powered by the XposedOrNot API — scans actual breach databases, not mock data.</p>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-inner">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <h3 class="feature-title">Password Audit</h3>
+            <p class="feature-desc">Uses SHA-1 k-anonymity via Have I Been Pwned to safely check if your password is compromised.</p>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-inner">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+          </div>
+          <div>
+            <h3 class="feature-title">AI Threat Analysis</h3>
+            <p class="feature-desc">An AI security analyst interprets your results and provides actionable remediation steps.</p>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-inner">
+          <div class="feature-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          </div>
+          <div>
+            <h3 class="feature-title">Dark Web Monitoring</h3>
+            <p class="feature-desc">Simulated dark web recon shows how your data appears on underground marketplaces.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-section">
+    <div class="glass-card stats-card">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+          <div class="stat-value">15B+</div>
+          <div class="stat-label">Breach Records</div>
+        </div>
+        <div class="stat-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          <div class="stat-value">Real-time</div>
+          <div class="stat-label">HIBP Integration</div>
+        </div>
+        <div class="stat-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4H14.26c-.16-1.49-.26-2.98-.26-4a2 2 0 0 0-2-2Z"/><path d="M14 22H10"/><path d="M5.65 8a8 8 0 1 1 12.7 0"/><path d="M12 2v2"/></svg>
+          <div class="stat-value">XposedOrNot</div>
+          <div class="stat-label">Breach API</div>
+        </div>
+        <div class="stat-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+          <div class="stat-value">SHA-1</div>
+          <div class="stat-label">K-Anonymity</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+        <span>SecureX &copy; <script>document.write(new Date().getFullYear())</script></span>
+      </div>
+      <span>Built with real-time threat intelligence</span>
+    </div>
+  </footer>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
