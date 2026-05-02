@@ -498,6 +498,15 @@ What would you like to know?"""
 
 
 # ═══════════════════════════════════════════
+#  Google Search Console Verification
+# ═══════════════════════════════════════════
+
+@app.route("/google39050cf5ed3de2c8.html")
+def google_verification():
+    return "google-site-verification: google39050cf5ed3de2c8.html", 200, {"Content-Type": "text/html"}
+
+
+# ═══════════════════════════════════════════
 #  Health Check
 # ═══════════════════════════════════════════
 
